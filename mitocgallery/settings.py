@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'imagestore',
     'sorl.thumbnail',
     'tagging',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

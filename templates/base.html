@@ -1,11 +1,11 @@
-{% load staticfiles %}
+{% load static %}
     <html>
         <head>
             <title>
                 {% block title %}Kitchensink{% endblock title %}
             </title>
             {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{% static "css/project.css" %}">
+            <link rel="stylesheet" type="text/css" href="{%  static  'imagestore.css' %}">
             {% endblock stylesheets %}
          </head>
         <body>

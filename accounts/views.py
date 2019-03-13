@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from imagestore import templates
 
 # Create your views here.
 def signup(request):
@@ -12,7 +13,7 @@ def signup(request):
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 login(request, user)
-                return render(request, 'accounts/signup.html', {'error':'Signup Successful!'})
+                return render(request, 'imagestore/album_list.html', {'error':'Signup Successful!'})
         else:
             return render(request, 'accounts/signup.html', {'error':'Passwords didn\'t match'})
     else:

@@ -33,6 +33,12 @@
 {% endblock %}
 
 {% block content %}
+  {% if error %}
+  {{ error }}
+  <br />
+  <br />
+  {% endif %}
+
     <h1>{% if view_user %}
         {% trans "Albums for user" %} {{ view_user }}
     {% else %}

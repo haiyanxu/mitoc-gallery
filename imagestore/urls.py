@@ -4,6 +4,8 @@ from django.conf.urls import url
 from .views import AlbumListView, ImageListView, UpdateImage, UpdateAlbum, \
     CreateImage, CreateAlbum, DeleteImage, DeleteAlbum, ImageView
 
+#app_name = 'imagestore'
+
 urlpatterns = [
     url(r'^$', AlbumListView.as_view(), name='index'),
 

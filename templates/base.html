@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     {% load static %}
-    <title>{% block title %}Kitchensink{% endblock title %}</title>
+    <title>{% block title %}MITOC Photo Gallery{% endblock title %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{%  static  'imagestore.css' %}">
     {% endblock stylesheets %}
@@ -26,6 +26,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+          </li>
           {% if user.is_authenticated %}
             <li class="nav-item active">
               <a class="nav-link" href="#" onClick="document.getElementById('logout').submit()">Logout<span class="sr-only">(current)</span></a></li>

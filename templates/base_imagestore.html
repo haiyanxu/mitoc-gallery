@@ -14,7 +14,8 @@
     {% load static %}
     <title>{% block title %}Imagestore_template{% endblock title %}</title>
     {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{%  static  'imagestore.css' %}">
+    <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
+    <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}">
     {% endblock stylesheets %}
   </head>
 
@@ -28,6 +29,12 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item active">
@@ -47,6 +54,13 @@
         </ul>
       </div>
     </nav>
+
+    <!-- The sidebar -->
+    <!--  <div class="sidebar">
+        <a class="active" href="#home">Home</a>
+        <a href="{% url 'imagestore:create-album' %}">New Album</a>
+        <a href="{% url 'imagestore:upload' %}">Upload Image</a>
+      </div> -->
 
       <div class="container">
 

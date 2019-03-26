@@ -34,6 +34,9 @@ class BaseAlbum(models.Model):
                              on_delete=models.SET_NULL, verbose_name=_('Head'),
                              related_name='head_of', blank=True, null=True)
     order = models.IntegerField(verbose_name=_('Order'), default=0)
+    tripreport = models.TextField(verbose_name=_('Trip Report'),
+                                   blank=True, null=True)
+
 
     class Meta:
         abstract = True

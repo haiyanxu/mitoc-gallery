@@ -43,6 +43,10 @@
                     {% include "imagestore/image-scope.html" %}
             </h2>
         {% endif %}
+        {% if image.summary %}<div class="image-description">
+            {{ image.summary }}
+        </div>
+        {% endif %}
         <div class="image-description">
             {{ image.description }}
         </div>

@@ -36,6 +36,9 @@ class BaseAlbum(models.Model):
     order = models.IntegerField(verbose_name=_('Order'), default=0)
     tripreport = models.TextField(verbose_name=_('Trip Report'),
                                    blank=True, null=True)
+    parent_album = models.ForeignKey(swapper.get_model_name('imagestore', 'Album'),
+                              on_delete=models.CASCADE, verbose_name=_('Parent Album'),
+                              blank=True, null=True, related_name='subalbums')
 
 
     class Meta:

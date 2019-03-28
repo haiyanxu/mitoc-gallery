@@ -48,7 +48,7 @@ class AlbumListView(ListView):
     allow_empty = True
 
     def get_queryset(self):
-        albums = Album.objects.filter(is_public=True).select_related('head')
+        albums = Album.objects.filter(is_public=True,parent_album__isnull=True).select_related('head')
         self.e_context = dict()
         if 'username' in self.kwargs:
             user = get_object_or_404(**{'klass': User, username_field: self.kwargs['username']})
@@ -94,9 +94,12 @@ class ImageListView(ListView):
 
     get_queryset = get_images_queryset
 
-    def get_context_data(self, **kwargs):
-        context = super(ImageListView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ImageListView, self).get_context_data(*args, **kwargs)
         context.update(self.e_context)
+        if 'album_id' in self.kwargs:
+            album = get_object_or_404(Album, id=self.kwargs['album_id'])
+            context['album_list']=Album.objects.filter(parent_album=album)
         return context
 
 

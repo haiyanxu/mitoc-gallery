@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 IMAGESTORE_TEMPLATE = 'base_imagestore.html'
 IMAGESTORE_SELF_MANAGE = True
+IMAGESTORE_SHOW_USER = True
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',

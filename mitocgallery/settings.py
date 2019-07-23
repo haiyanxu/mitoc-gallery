@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'tagging',
     'debug_toolbar',
+    'django_markdown2',
     'django_cleanup.apps.CleanupConfig',
 ]
 

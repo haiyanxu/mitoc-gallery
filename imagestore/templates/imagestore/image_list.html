@@ -27,7 +27,6 @@
 
 {% endblock %}
 
-
 {% block controls %}
     {% if album %}
         {% if request.user == album.user or perms.imagestore.moderate_albums %}
@@ -43,6 +42,7 @@
     {% include "imagestore/pagination.html" %}
     {% if album.tripreport %}<div class="image-description">
         {{ album.tripreport }}
+        {% load md2 %}{{ album.tripreport|markdown|linebreaks }}
     </div>
     {% endif %}
     <div id="image-thumbnails">
@@ -63,7 +63,10 @@
             </div>
         {% endfor %}
     </div>
+    {% if not album_list and not image_list %}This album is empty{% endif %}
+    {% if album_list %}
     <div class='album-list'>
+      <h2>Sub-Albums</h2>
         {% for album in album_list %}
             {% if album.get_head  or album.user == request.user %}
             <div class='album'>

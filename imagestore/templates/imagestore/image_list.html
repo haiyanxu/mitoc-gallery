@@ -41,7 +41,6 @@
     </h1>
     {% include "imagestore/pagination.html" %}
     {% if album.tripreport %}<div class="image-description">
-        {{ album.tripreport }}
         {% load md2 %}{{ album.tripreport|markdown|linebreaks }}
     </div>
     {% endif %}

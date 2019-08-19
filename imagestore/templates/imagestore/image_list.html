@@ -58,13 +58,13 @@
                     <a href="{{ album.get_absolute_url }}">
                     {% if album.get_head %}
                         {% thumbnail album.get_head.image "150x150" crop='center' as album_head %}
-                            <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ album_head.url }}">
+                            <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound150.png' %}" src="{{ album_head.url }}">
                             <!-- <img class="preview" src="{{ album_head.url }}">   displays broken link thumbnail instead of album name when preview is not found.  -->
                             {% empty %}
                             <!-- <img src="{% static 'icons/imgnotfound.png' %}" {% if album.name %} alt="{{ album.name }}" {% endif %} src="{{ album_head.url }}"/> -->
                         {% endthumbnail %}
                     {% else %}
-                        <img src="{% static 'icons/emptyalbum.png' %}"/>
+                        <img src="{% static 'icons/emptyalbum150.png' %}"/>
                         [{% trans "Empty album" %}]
 
                     {% endif %}
@@ -92,7 +92,7 @@
             <div class='image-preview'>
             {% thumbnail image.image "120x120" crop="center" as im %}
                 <a class="thumb" rel='gallery-image[ilist]' href="{{ image.image.url }}">
-                    <img class="preview" {% imagestore_alt image forloop.counter %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ im.url }}">
+                    <img class="preview" {% imagestore_alt image forloop.counter %} onerror=this.src="{% static 'icons/imgnotfound120.png' %}" src="{{ im.url }}">
                 </a>
                 <a href="{% include "imagestore/image-href.html" %}">
                     {% if image.title %}

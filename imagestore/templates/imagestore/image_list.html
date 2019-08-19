@@ -64,7 +64,7 @@
                             <!-- <img src="{% static 'icons/imgnotfound.png' %}" {% if album.name %} alt="{{ album.name }}" {% endif %} src="{{ album_head.url }}"/> -->
                         {% endthumbnail %}
                     {% else %}
-                        <img src="{% static 'icons/imgnotfound.png' %}"/>
+                        <img src="{% static 'icons/emptyalbum.png' %}"/>
                         [{% trans "Empty album" %}]
 
                     {% endif %}
@@ -92,7 +92,7 @@
             <div class='image-preview'>
             {% thumbnail image.image "120x120" crop="center" as im %}
                 <a class="thumb" rel='gallery-image[ilist]' href="{{ image.image.url }}">
-                    <img class="preview" {% imagestore_alt image forloop.counter %} src="{{ im.url }}">
+                    <img class="preview" {% imagestore_alt image forloop.counter %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ im.url }}">
                 </a>
                 <a href="{% include "imagestore/image-href.html" %}">
                     {% if image.title %}

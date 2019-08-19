@@ -46,7 +46,7 @@
     </div>
     {% endif %}
 
-    {% if not album_list and not image_list %}This album is empty{% endif %}
+    {% if not album_list and not image_list %}<img src="{% static 'icons/emptyalbum.png' %}"/><br> This album is empty{% endif %}
 
     {% if album_list %}
     <div class='album-list'>

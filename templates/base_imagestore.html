@@ -11,61 +11,94 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
+    {% load i18n %}
     {% load static %}
     <title>{% block title %}Imagestore_template{% endblock title %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
     <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}">
-    {% endblock stylesheets %}
+    {% endblock %}
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
+        </li>
+        {% if user.is_authenticated %}
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#" onClick="document.getElementById('logout').submit()">Logout<span class="sr-only">(current)</span></a></li>
+            <form id="logout" method="POST" action="{% url 'accounts:logout' %}">
+              {% csrf_token %}
+              <input type="hidden">
+            </form>
+        {% else %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Signup<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'accounts:login' %}">Login<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
-          </li>
-          {% if user.is_authenticated %}
-            <li class="nav-item active">
-              <a class="nav-link" href="#" onClick="document.getElementById('logout').submit()">Logout<span class="sr-only">(current)</span></a></li>
-              <form id="logout" method="POST" action="{% url 'accounts:logout' %}">
-                {% csrf_token %}
-                <input type="hidden">
-              </form>
-          {% else %}
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'accounts:signup' %}">Signup<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'accounts:login' %}">Login<span class="sr-only">(current)</span></a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 
-    <!-- The sidebar -->
-    <!--  <div class="sidebar">
-        <a class="active" href="#home">Home</a>
-        <a href="{% url 'imagestore:create-album' %}">New Album</a>
-        <a href="{% url 'imagestore:upload' %}">Upload Image</a>
-      </div> -->
+  <!-- The sidebar -->
+   <!-- <div class="sidebar">
+      <a class="active" href="#home">Home</a>
+      <a href="{% url 'imagestore:create-album' %}">New Album</a>
+      <a href="{% url 'imagestore:upload' %}">Upload Image</a>
+    </div> -->
+
+  <body>
 
       <div class="container">
 
+        {% block breadcrumb %}
+            <ul class='breadcrumb'>
+                {% if request.path != '/' %}
+                    <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+                {% endif %}
+                {% if request.path != imagestore_index_url %}
+                    <li><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a> <span class="divider">/</span></li>
+                {% endif %}
+                {% block imagestore-breadcrumb %}
+            {% endblock %}
+            </ul>
+        {% endblock %}
+
         {% block content %}
-        <h1>Example project</h1>
+        {% endblock content %}
+
+        {% block content-related %}
+                {% block imagestore-info %}
+                {% endblock %}
+                <div id="controls">
+                    <ul>
+                        {% if imagestore_perms.add_image or request.user.is_superuser %}
+                            <li><a href={% url 'imagestore:upload' %}>{% trans "Upload image" %}</a></li>
+                        {% endif %}
+                        {% if imagestore_perms.add_album or request.user.is_superuser %}
+                            <li><a href={% url 'imagestore:create-album' %}>{% trans "Create new album" %}</a></li>
+                        {% endif %}
+                        {% block controls %}
+                        {% endblock controls %}
+                    </ul>
+                </div>
+                {% block imagestore-related %}
+                {% endblock %}
         {% endblock %}
 
       </div>

@@ -57,14 +57,14 @@
                 <div class='album-head'>
                     <a href="{{ album.get_absolute_url }}">
                     {% if album.get_head %}
-                        {% thumbnail album.get_head.image "150x150" crop='center' as album_head %}
-                            <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound150.png' %}" src="{{ album_head.url }}">
+                        {% thumbnail album.get_head.image "128x128" crop='center' as album_head %}
+                            <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ album_head.url }}">
                             <!-- <img class="preview" src="{{ album_head.url }}">   displays broken link thumbnail instead of album name when preview is not found.  -->
                             {% empty %}
                             <!-- <img src="{% static 'icons/imgnotfound.png' %}" {% if album.name %} alt="{{ album.name }}" {% endif %} src="{{ album_head.url }}"/> -->
                         {% endthumbnail %}
                     {% else %}
-                        <img src="{% static 'icons/emptyalbum150.png' %}"/>
+                        <img src="{% static 'icons/emptyalbum.png' %}"/>
                         [{% trans "Empty album" %}]
 
                     {% endif %}

@@ -45,7 +45,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_markdown2',
     'django_cleanup.apps.CleanupConfig',
+    'pages',
+    'users',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 IMAGESTORE_TEMPLATE = 'base_imagestore.html'
 IMAGESTORE_SELF_MANAGE = True
@@ -139,3 +143,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

@@ -1,0 +1,23 @@
+<!-- templates/signup.html -->
+
+{% extends 'base_imagestore.html' %}
+
+{% block title %} MITOC Gallery: Sign up {% endblock %}
+
+{% block content %}
+
+<h2>Sign up</h2>
+
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign up</button>
+</form>
+
+{% endblock %}

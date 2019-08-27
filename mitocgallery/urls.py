@@ -26,9 +26,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', include('pages.urls')),
     url(r'^gallery/', include(('imagestore.urls', 'imagestore'), namespace='imagestore')),
-    url(r'^accounts/', include('accounts.urls')),
+    # url(r'^accounts/', include('accounts.urls')),
     url(r'^users/', include('users.urls')),
-    path('users/', include('django.contrib.auth.urls')),
+    path('accounts/', include('allauth.urls')),
     # url(r'^$', TemplateView.as_view(template_name='main.html'), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

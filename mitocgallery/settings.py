@@ -57,12 +57,11 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-IMAGESTORE_TEMPLATE = 'base_imagestore.html'
+IMAGESTORE_TEMPLATE = 'base.html'
 IMAGESTORE_SELF_MANAGE = True
 IMAGESTORE_SHOW_USER = True
 # ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-# ACCOUNT_TEMPLATE_EXTENSION = 'base_imagestore.html'
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',

@@ -39,9 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+
     # 'allauth.socialaccount.providers.google',
     # 'accounts',
     'imagestore',
@@ -52,6 +50,9 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'pages',
     'users',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -59,6 +60,9 @@ AUTH_USER_MODEL = 'users.CustomUser'
 IMAGESTORE_TEMPLATE = 'base_imagestore.html'
 IMAGESTORE_SELF_MANAGE = True
 IMAGESTORE_SHOW_USER = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+# ACCOUNT_TEMPLATE_EXTENSION = 'base_imagestore.html'
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',

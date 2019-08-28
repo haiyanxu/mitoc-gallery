@@ -65,8 +65,18 @@
 
       <div class="container">
 
+        {% block breadcrumb %}
+        {% endblock %}
+
         {% block content %}
         <h1>Example project</h1>
+        {% endblock %}
+
+        {% block content-related %}
+                {% block imagestore-info %}
+                {% endblock %}
+                {% block imagestore-related %}
+                {% endblock %}
         {% endblock %}
 
       </div>

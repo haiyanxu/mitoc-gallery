@@ -1,6 +1,7 @@
 {% extends "imagestore/base.html" %}
 {% load i18n %}
 {% load thumbnail %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     {% trans "Upload image" %}
@@ -14,7 +15,7 @@
     <h1>{% trans "Upload image" %}</h1>
     <form action="." method="post" enctype="multipart/form-data" class='upload-image'>
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <input type="submit" value="{% trans "Upload" %}" class='btn success'>
     </form>
 {% endblock content %}

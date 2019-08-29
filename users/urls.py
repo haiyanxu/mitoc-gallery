@@ -1,9 +1,9 @@
 # users/urls.py
+#
+# from django.urls import path, include
+# from . import views
+# from .views import SignUpView
 
-from django.urls import path, include
-from . import views
-from .views import SignUpView
-
-urlpatterns = [
-    path('signup/', SignUpView.as_view(), name='signup'),
-]
+# urlpatterns = [
+#     path('signup/', SignUpView.as_view(), name='signup'),
+# ]

@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django_markdown2',
     'django_cleanup.apps.CleanupConfig',
     'pages',
-    'users',
+    # 'users',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-AUTH_USER_MODEL = 'users.CustomUser'
+# AUTH_USER_MODEL = 'users.CustomUser'
 
 IMAGESTORE_TEMPLATE = 'base.html'
 IMAGESTORE_SELF_MANAGE = True

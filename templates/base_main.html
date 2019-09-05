@@ -52,21 +52,23 @@
       </div>
     </nav>
 
-    {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
-        {% for message in messages %}
-        <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+
 
       <div class="container">
 
         {% block breadcrumb %}
         {% endblock %}
+
+        {% if messages %}
+        <div>
+          <strong>Messages:</strong>
+          <ul>
+            {% for message in messages %}
+            <li>{{message}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
 
         {% block content %}
         <h1>Example project</h1>

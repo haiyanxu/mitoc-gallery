@@ -14,7 +14,8 @@
             </a>
         </div>
         <div class="user-name">
-            <a href="{{ profile.get_absolute_url }}">
+            <!-- <a href="{{ user.get_absolute_url }}"> -->
+            <a href="{% url 'imagestore:user' username=user %}">
                 {{ user }}
             </a>
         </div>

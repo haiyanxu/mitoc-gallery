@@ -13,6 +13,8 @@ from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag
 from django.db.models import Q
 from .utils import load_class
+from django.http import HttpResponse
+from django.shortcuts import render
 try:
     from dal.autocomplete import Select2QuerySetView
 except ImportError:
@@ -277,3 +279,6 @@ class TagAutocomplete(Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
+
+def usertest(request):
+    return render(request, 'imagestore/user_info.html')

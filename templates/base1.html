@@ -1,3 +1,5 @@
+{% extends "base_main.html" %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,53 +15,58 @@
 
     {% load i18n %}
     {% load static %}
-    <title>{% block title %}MITOC Photo Gallery{% endblock title %}</title>
+    <title>{% block title %}Imagestore_template{% endblock title %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
     <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}">
     {% endblock %}
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+        </li>
+        {% if imagestore_perms.add_album or request.user.is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+        </li> {% endif %}
+        {% if imagestore_perms.add_image or request.user.is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
+        </li> {% endif %}
+        {% if user.is_authenticated %}
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#" onClick="document.getElementById('logout').submit()">Logout<span class="sr-only">(current)</span></a></li>
+            <form id="logout" method="POST" action="{% url 'accounts:logout' %}">
+              {% csrf_token %}
+              <input type="hidden">
+            </form>
+        {% else %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Signup<span class="sr-only">(current)</span></a>
           </li>
-          {% if imagestore_perms.add_album or request.user.is_superuser %}
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
-          </li> {% endif %}
-          {% if imagestore_perms.add_image or request.user.is_superuser %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
-          </li> {% endif %}
-          {% if user.is_authenticated %}
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'account_logout' %}">Logout<span class="sr-only">(current)</span></a></li>
-          {% else %}
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'account_signup' %}">Signup<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'account_login' %}">Login<span class="sr-only">(current)</span></a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+            <a class="nav-link" href="{% url 'accounts:login' %}">Login<span class="sr-only">(current)</span></a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav> -->
 
-    <!-- The sidebar -->
-     <!-- <div class="sidebar">
-        <a class="active" href="#home">Home</a>
-        <a href="{% url 'imagestore:create-album' %}">New Album</a>
-        <a href="{% url 'imagestore:upload' %}">Upload Image</a>
-      </div> -->
+  <!-- The sidebar -->
+   <!-- <div class="sidebar">
+      <a class="active" href="#home">Home</a>
+      <a href="{% url 'imagestore:create-album' %}">New Album</a>
+      <a href="{% url 'imagestore:upload' %}">Upload Image</a>
+    </div> -->
+
+  <body>
 
       <div class="container">
 
@@ -72,24 +79,12 @@
                     <li><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a> <span class="divider">/</span></li>
                 {% endif %}
                 {% block imagestore-breadcrumb %}
-                {% endblock %}
+            {% endblock %}
             </ul>
         {% endblock %}
 
-        {% if messages %}
-        <div>
-          <strong>Messages:</strong>
-          <ul>
-            {% for message in messages %}
-            <li>{{message}}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-
         {% block content %}
-        <!-- <h1>Example project</h1> -->
-        {% endblock %}
+        {% endblock content %}
 
         {% block content-related %}
                 {% block imagestore-info %}

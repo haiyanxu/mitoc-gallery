@@ -5,9 +5,7 @@
 {% load static %}
 
 {% block imagestore-breadcrumb %}
-    {% with "li" as scope_tag %}
-        {% include "imagestore/image-scope.html" %}
-    {% endwith %}
+    <li class="breadcrumb-item active" aria-current="page">{% include "imagestore/image-scope.html" %}</li>
 {% endblock %}
 
 {% block title %}

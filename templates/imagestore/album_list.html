@@ -12,13 +12,11 @@
 {% endblock %}
 
 {% block imagestore-breadcrumb %}
-    <li>
-        {% if view_user %}
-            {% trans "Albums for user" %} {{ view_user }}
-        {% else %}
-            {% trans "All albums" %}
-        {% endif %}
-    </li>
+    {% if view_user %}
+        <li class="breadcrumb-item active" aria-current="page">{% trans "Albums for user" %} {{ view_user }}</li>
+    {% else %}
+        <li class="breadcrumb-item active" aria-current="page">{% trans "All albums" %}</li>
+    {% endif %}
 {% endblock %}
 
 {% block imagestore-info %}

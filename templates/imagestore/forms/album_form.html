@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block imagestore-breadcrumb %}
-    <li>
+    <li class="breadcrumb-item active" aria-current="page">
         {% if object %}
             {% trans "Edit album" %}: {{ object.name }}
         {% else %}

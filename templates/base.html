@@ -64,16 +64,22 @@
       <div class="container">
 
         {% block breadcrumb %}
-            <ul class='breadcrumb'>
-                {% if request.path != '/' %}
-                    <li><a href="/">{% trans "Home" %}</a> <span class="divider">/</span></li>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <!-- {% if request.path != '/' %}
+                    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
                 {% endif %}
+                {% if request.path == '/' %}
+                    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+                {% endif %} -->
+                <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
                 {% if request.path != imagestore_index_url %}
-                    <li><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a> <span class="divider">/</span></li>
+                    <li class="breadcrumb-item"><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a></li>
                 {% endif %}
                 {% block imagestore-breadcrumb %}
                 {% endblock %}
-            </ul>
+            </ol>
+          </nav>
         {% endblock %}
 
         {% if messages %}

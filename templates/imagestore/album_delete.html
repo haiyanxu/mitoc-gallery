@@ -2,6 +2,10 @@
 
 {% load i18n %}
 
+{% block imagestore-breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">{% trans "Delete Album" %}</li>
+{% endblock %}
+
 {% block content %}
     <p>{% trans "Are you sure that you would like to delete this album?" %}</p>
     <form method="post" action=".">

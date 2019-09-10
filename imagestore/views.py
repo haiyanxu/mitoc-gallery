@@ -232,6 +232,9 @@ class CreateImage(CreateView):
             self.object.album.save()
         return HttpResponseRedirect(self.get_success_url())
 
+    def get_success_url(self):
+        return reverse('imagestore:image-album', kwargs={'album_id':self.object.album.id, 'pk':self.object.id})
+
 
 def get_edit_image_queryset(self):
     if self.request.user.has_perm('%s.moderate_%s' % (image_applabel, image_classname)):

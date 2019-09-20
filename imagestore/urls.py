@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^image/(?P<pk>\d+)/update/$', UpdateImage.as_view(), name='update-image'),
 
     url(r'^usertest/', views.usertest, name='usertest'),
+    url(r'^showalbums/$', views.showalbums, name = 'showalbums'),
 ]

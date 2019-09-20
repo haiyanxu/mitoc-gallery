@@ -11,6 +11,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from sorl.thumbnail import get_thumbnail
 from sorl.thumbnail.helpers import ThumbnailError
+from mptt.models import MPTTModel, TreeForeignKey
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,7 @@ SELF_MANAGE = getattr(settings, 'IMAGESTORE_SELF_MANAGE', True)
 
 
 @python_2_unicode_compatible
-class BaseAlbum(models.Model):
+class BaseAlbum(MPTTModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE, verbose_name=_('User'),
                              blank=True, null=True, related_name='albums')
@@ -36,9 +37,9 @@ class BaseAlbum(models.Model):
     order = models.IntegerField(verbose_name=_('Order'), default=0)
     tripreport = models.TextField(verbose_name=_('Trip Report'),
                                    blank=True, null=True)
-    parent_album = models.ForeignKey(swapper.get_model_name('imagestore', 'Album'),
+    parent = TreeForeignKey(swapper.get_model_name('imagestore', 'Album'),
                               on_delete=models.CASCADE, verbose_name=_('Parent Album'),
-                              blank=True, null=True, related_name='subalbums')
+                              blank=True, null=True, related_name='subalbums', db_index=True)
 
 
     class Meta:

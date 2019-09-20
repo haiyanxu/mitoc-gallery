@@ -50,7 +50,7 @@ class AlbumListView(ListView):
     allow_empty = True
 
     def get_queryset(self):
-        albums = Album.objects.filter(is_public=True,parent_album__isnull=True).select_related('head')
+        albums = Album.objects.filter(is_public=True,parent__isnull=True).select_related('head')
         self.e_context = dict()
         if 'username' in self.kwargs:
             user = get_object_or_404(**{'klass': User, username_field: self.kwargs['username']})
@@ -101,7 +101,7 @@ class ImageListView(ListView):
         context.update(self.e_context)
         if 'album_id' in self.kwargs:
             album = get_object_or_404(Album, id=self.kwargs['album_id'])
-            context['album_list']=Album.objects.filter(parent_album=album)
+            context['album_list']=Album.objects.filter(parent=album)
         return context
 
 
@@ -285,3 +285,6 @@ class TagAutocomplete(Select2QuerySetView):
 
 def usertest(request):
     return render(request, 'imagestore/user_info.html')
+
+def showalbums(request):
+    return render(request, 'imagestore/showalbums.html',  {'albums': Album.objects.all()})

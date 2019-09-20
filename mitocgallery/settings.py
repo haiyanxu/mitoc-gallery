@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
     # 'accounts',
     'crispy_forms',
+    'mptt',
     'imagestore',
     'sorl.thumbnail',
     'tagging',

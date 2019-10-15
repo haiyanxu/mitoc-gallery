@@ -3,8 +3,8 @@ import swapper
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.shortcuts import get_object_or_404
-from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.http import Http404, HttpResponseRedirect, JsonResponse, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required, login_required
 from django.utils.translation import ugettext_lazy as _
@@ -13,8 +13,7 @@ from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag
 from django.db.models import Q
 from .utils import load_class
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib.auth.models import User
 try:
     from dal.autocomplete import Select2QuerySetView
 except ImportError:
@@ -283,8 +282,14 @@ class TagAutocomplete(Select2QuerySetView):
             qs = qs.filter(name__istartswith=self.q)
         return qs
 
-def usertest(request):
-    return render(request, 'imagestore/user_info.html')
-
 def showalbums(request):
-    return render(request, 'imagestore/showalbums.html',  {'albums': Album.objects.all()})
+    return render(request, 'imagestore/showalbums.html',  {'albumroot': Album.objects.filter(level__lte=0)})
+
+def sidebarsubalbums(request):
+    if request.method == 'GET':
+        album_id = request.GET['get_parent_album']
+        subalbums = Album.objects.filter(parent=album_id)
+        return render(request, 'imagestore/sidebar_subalbums.html', {'subalbums': subalbums})
+    else:
+        # return render(request, "sidebar_subalbums.html", {'albumlist':  Album.objects.filter(parent='2806')})
+        return render(request, 'imagestore/user_info.html')

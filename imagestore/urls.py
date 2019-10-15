@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.conf.urls import url
+from django.urls import include, path
 from .views import AlbumListView, ImageListView, UpdateImage, UpdateAlbum, \
     CreateImage, CreateAlbum, DeleteImage, DeleteAlbum, ImageView
 from . import views
@@ -27,7 +28,6 @@ urlpatterns = [
     url(r'^tag/(?P<tag>[^/]+)/image/(?P<pk>\d+)/$', ImageView.as_view(), name='image-tag'),
     url(r'^image/(?P<pk>\d+)/delete/$', DeleteImage.as_view(), name='delete-image'),
     url(r'^image/(?P<pk>\d+)/update/$', UpdateImage.as_view(), name='update-image'),
-
-    url(r'^usertest/', views.usertest, name='usertest'),
     url(r'^showalbums/$', views.showalbums, name = 'showalbums'),
+    url(r'^sidebarsubalbums/$', views.sidebarsubalbums, name='sidebar_subalbums'),
 ]

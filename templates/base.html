@@ -16,11 +16,9 @@
     <title>{% block title %}MITOC Photo Gallery{% endblock title %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}"> -->
     {% endblock %}
-  </head>
 
-  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,74 +51,85 @@
         </ul>
       </div>
     </nav>
+  </head>
 
-    <!-- The sidebar -->
-     <!-- <div class="sidebar">
-        <a class="active" href="#home">Home</a>
-        <a href="{% url 'imagestore:create-album' %}">New Album</a>
-        <a href="{% url 'imagestore:upload' %}">Upload Image</a>
-      </div> -->
+  <body>
 
-      <div class="container">
+    <div class="wrapper">
+      <!-- The sidebar -->
+       <nav id="sidebar">
+          <ul class="list-unstyled components">
+            <li>
+              <a class="active" href="#home">Home</a>
+            </li>
+            <li>
+              <a href="{% url 'imagestore:create-album' %}">New Album</a>
+            </li>
+            <li>
+              <a href="{% url 'imagestore:upload' %}">Upload Image</a>
+            </li>
+        </nav>
 
-        {% block breadcrumb %}
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <!-- {% if request.path != '/' %}
+        <div id="content">
+            {% block breadcrumb %}
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <!-- {% if request.path != '/' %}
+                        <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+                    {% endif %}
+                    {% if request.path == '/' %}
+                        <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+                    {% endif %} -->
                     <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                {% endif %}
-                {% if request.path == '/' %}
-                    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                {% endif %} -->
-                <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                {% if request.path != imagestore_index_url %}
-                    <li class="breadcrumb-item"><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a></li>
-                {% endif %}
-                {% block imagestore-breadcrumb %}
-                {% endblock %}
-            </ol>
-          </nav>
-        {% endblock %}
+                    {% if request.path != imagestore_index_url %}
+                        <li class="breadcrumb-item"><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a></li>
+                    {% endif %}
+                    {% block imagestore-breadcrumb %}
+                    {% endblock %}
+                </ol>
+              </nav>
+            {% endblock %}
 
-        {% if messages %}
-        <div>
-          <strong>Messages:</strong>
-          <ul>
-            {% for message in messages %}
-            <li>{{message}}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
+            {% if messages %}
+            <div>
+              <strong>Messages:</strong>
+              <ul>
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
 
-        {% block content %}
-        <!-- <h1>Example project</h1> -->
-        {% endblock %}
+            {% block content %}
+            <!-- <h1>Example project</h1> -->
+            {% endblock %}
 
-        {% block content-related %}
-                {% block imagestore-info %}
-                {% endblock %}
-                <div id="controls">
-                    <ul>
-                        <!-- {% if imagestore_perms.add_image or request.user.is_superuser %}
-                            <li><a href={% url 'imagestore:upload' %}>{% trans "Upload image" %}</a></li>
-                        {% endif %}
-                        {% if imagestore_perms.add_album or request.user.is_superuser %}
-                            <li><a href={% url 'imagestore:create-album' %}>{% trans "Create new album" %}</a></li>
-                        {% endif %} -->
-                        {% block controls %}
-                        {% endblock controls %}
-                    </ul>
-                </div>
-                {% block imagestore-related %}
-                {% endblock %}
-        {% endblock %}
+            {% block content-related %}
+                    {% block imagestore-info %}
+                    {% endblock %}
+                    <div id="controls">
+                        <ul>
+                            <!-- {% if imagestore_perms.add_image or request.user.is_superuser %}
+                                <li><a href={% url 'imagestore:upload' %}>{% trans "Upload image" %}</a></li>
+                            {% endif %}
+                            {% if imagestore_perms.add_album or request.user.is_superuser %}
+                                <li><a href={% url 'imagestore:create-album' %}>{% trans "Create new album" %}</a></li>
+                            {% endif %} -->
+                            {% block controls %}
+                            {% endblock controls %}
+                        </ul>
+                    </div>
+                    {% block imagestore-related %}
+                    {% endblock %}
+            {% endblock %}
 
+          </div>
       </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 

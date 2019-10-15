@@ -1,0 +1,10 @@
+{% for album in subalbums %}
+    <li>
+        <a href="{{ album.get_absolute_url }}">{{ album.name }}</a>
+        {% if not album.is_leaf_node %}
+            <a href="#{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"></a>
+            <ul class="collapse" id="{{ album.pk }}">
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}

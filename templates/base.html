@@ -29,6 +29,13 @@
     {% endblock %}
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+                <i class="fas fa-align-left"></i>
+                <span>Toggle Sidebar</span>
+            </button>
+
       <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -59,6 +66,7 @@
           {% endif %}
         </ul>
       </div>
+    </div>
     </nav>
   </head>
 
@@ -67,57 +75,27 @@
     <div class="wrapper">
       <!-- The sidebar -->
       <nav id="sidebar">
-          <div class="sidebar-header">
+          <!-- <div class="sidebar-header">
               <h3>Albums</h3>
-          </div>
+          </div> -->
 
           <ul class="list-unstyled components" id="accordion">
               {% get_root_albums as albumroot %}
               <!-- <p>Dummy Heading</p> -->
               {% for album in albumroot %}
               <li>
-                  <a href="{{ album.get_absolute_url }}">{{ album.name }}</a>
+                  <a href="{{ album.get_absolute_url }}">{{ album.name|truncatechars:25 }}</a>
                   {% if not album.is_leaf_node %}
-                      <a href="#{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"></a>
-                      <ul class="collapse" id="{{ album.pk }}">
-                        <li>item</li>
+                      <a href="#{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-angle-down"></i></a>
+                      <ul class="collapse list-unstyled" id="{{ album.pk }}">
                       </ul>
                   {% endif %}
               </li>
               {% endfor %}
-              <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
-              </li>
           </ul>
       </nav>
 
-
-
-       <!-- <nav id="sidebar">
-          <ul class="list-unstyled components">
-            <li>
-              <a class="active" href="#home">Home</a>
-            </li>
-            <li>
-              <a href="{% url 'imagestore:create-album' %}">New Album</a>
-            </li>
-            <li>
-              <a href="{% url 'imagestore:upload' %}">Upload Image</a>
-            </li>
-        </nav> -->
-
-        <div id="content">
+        <div id="content" class="content">
             {% block breadcrumb %}
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">

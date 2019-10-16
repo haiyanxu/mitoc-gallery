@@ -13,10 +13,19 @@
 
     {% load i18n %}
     {% load static %}
+    {% load imagestore_tags %}
+    {% load mptt_tags %}
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
     <title>{% block title %}MITOC Photo Gallery{% endblock title %}</title>
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
-    <!-- <link rel="stylesheet" type="text/css" href="{%  static  'css/sidebar.css' %}"> -->
     {% endblock %}
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -57,7 +66,45 @@
 
     <div class="wrapper">
       <!-- The sidebar -->
-       <nav id="sidebar">
+      <nav id="sidebar">
+          <div class="sidebar-header">
+              <h3>Albums</h3>
+          </div>
+
+          <ul class="list-unstyled components" id="accordion">
+              {% get_root_albums as albumroot %}
+              <!-- <p>Dummy Heading</p> -->
+              {% for album in albumroot %}
+              <li>
+                  <a href="{{ album.get_absolute_url }}">{{ album.name }}</a>
+                  {% if not album.is_leaf_node %}
+                      <a href="#{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"></a>
+                      <ul class="collapse" id="{{ album.pk }}">
+                        <li>item</li>
+                      </ul>
+                  {% endif %}
+              </li>
+              {% endfor %}
+              <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">Page 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Page 3</a>
+                    </li>
+                </ul>
+              </li>
+          </ul>
+      </nav>
+
+
+
+       <!-- <nav id="sidebar">
           <ul class="list-unstyled components">
             <li>
               <a class="active" href="#home">Home</a>
@@ -68,7 +115,7 @@
             <li>
               <a href="{% url 'imagestore:upload' %}">Upload Image</a>
             </li>
-        </nav>
+        </nav> -->
 
         <div id="content">
             {% block breadcrumb %}
@@ -127,11 +174,29 @@
           </div>
       </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+      <script>
+      $(document).ready(function(){
+            $('#accordion').on('show.bs.collapse', function (e) {
+              // alert('Event fired on album ' + e.target.id);
+              var parent_album_id = e.target.id;
+              // $('#').html("Hello World");
+              console.log("parent album id is: " + parent_album_id);
+              $.get('/gallery/sidebarsubalbums/', {get_parent_album: parent_album_id}, function(data){
+                   $('#'+parent_album_id).html(data);
+                   // console.log("finished getting html:" + data);
+              });
+          });
+      });
+      </script>
+
+      <script>
+          $(document).ready(function () {
+              $('#sidebarCollapse').on('click', function () {
+                  $('#sidebar').toggleClass('active');
+                  console.log('toggling sidebar');
+              });
+          });
+      </script>
 
   </body>
 </html>

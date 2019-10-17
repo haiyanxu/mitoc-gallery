@@ -7,6 +7,9 @@
     align-items: stretch;
 }
 
+.navbar {
+  font-family: 'Poppins', sans-serif;
+}
 
 /*------------------------SIDEBAR STYLE------------------------*/
 
@@ -14,10 +17,13 @@
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
-    background: #8A8B8C;
+    background: gainsboro;
     color: #fff;
     transition: all 0.3s;
     font-size: 18px;
+    border-right: #e9ecef;
+    border-right-style: solid;
+    border-right-width: .1em;
 }
 
 #sidebar.active {
@@ -59,19 +65,20 @@
 #sidebar ul li a {
     padding: 0px 0px;
     font-size: 1em;
-    color: #fff;
+    color: #A31F34;
+    /* color: #fff; */
     /* display: block; */
 }
 
 #sidebar ul li a:hover {
-    /* color: #FBE6E5; */
+    color: #A31F34;
     /* background: #363636; */
     text-decoration: none;
 }
 
 #sidebar ul li:hover {
-    color: #FBE6E5;
-    background: #747474;
+    color: #A31F34;
+    background: #e9ecef;
 }
 
 a[data-toggle="collapse"] {

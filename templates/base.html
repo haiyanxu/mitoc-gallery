@@ -31,17 +31,51 @@
     <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
     {% endblock %}
 
-
   </head>
 
   <body>
 
-    <div class="wrapper">
-      <!-- The sidebar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
+              </li>
+              {% if imagestore_perms.add_album or request.user.is_superuser %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+              </li> {% endif %}
+              {% if imagestore_perms.add_image or request.user.is_superuser %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
+              </li> {% endif %}
+              {% if user.is_authenticated %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'account_logout' %}">Logout<span class="sr-only">(current)</span></a></li>
+              {% else %}
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'account_signup' %}">Signup<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'account_login' %}">Login<span class="sr-only">(current)</span></a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
 
+    <div class="wrapper">
+
+      <!-- The sidebar -->
       <nav id="sidebar">
           <div id="dismiss">
-              <i class="fas fa-arrow-left"></i>
+              <i class="fas fa-angle-double-left"></i>
           </div>
           <div class="sidebar-header">
               <h3>Albums</h3>
@@ -63,50 +97,12 @@
           </ul>
       </nav>
 
-
+        <!-- Open Sidebar Button -->
+        <button type="button" id="open-sidebar" class="btn btn-primary btn-sm">
+          <i class="fas fa-angle-double-right"></i>
+        </button>
 
         <div id="content" class="content">
-
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-info">
-                    <i class="fas fa-align-left"></i>
-                    <span>Toggle Sidebar</span>
-                </button>
-
-                <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
-                    </li>
-                    {% if imagestore_perms.add_album or request.user.is_superuser %}
-                    <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
-                    </li> {% endif %}
-                    {% if imagestore_perms.add_image or request.user.is_superuser %}
-                    <li class="nav-item active">
-                      <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
-                    </li> {% endif %}
-                    {% if user.is_authenticated %}
-                      <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'account_logout' %}">Logout<span class="sr-only">(current)</span></a></li>
-                    {% else %}
-                      <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'account_signup' %}">Signup<span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'account_login' %}">Login<span class="sr-only">(current)</span></a>
-                      </li>
-                    {% endif %}
-                  </ul>
-                </div>
-              </div>
-            </nav>
 
             {% block breadcrumb %}
                 <nav aria-label="breadcrumb">
@@ -184,7 +180,7 @@
       <script>
           $(document).ready(function () {
               $("#sidebar").mCustomScrollbar({
-                  theme: "minimal"
+                  theme: "minimal-dark"
               });
 
               $('#dismiss, .overlay').on('click', function () {
@@ -194,7 +190,7 @@
                   $('.overlay').removeClass('active');
               });
 
-              $('#sidebarCollapse').on('click', function () {
+              $('#open-sidebar').on('click', function () {
                   // open sidebar
                   $('#sidebar').addClass('active');
                   // fade in the overlay

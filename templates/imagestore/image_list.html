@@ -92,7 +92,7 @@
         {% for image in image_list %}
             <div class='image-preview'>
             {% thumbnail image.image "120x120" crop="center" as im %}
-                <a class="thumb" rel='gallery-image[ilist]' href="{{ image.image.url }}">
+                <a class="thumb" rel='gallery-image[ilist]' href="{{ image.image.url }}" title="{{ image.title }}" summary="{{ image.summary }}" user="{{ image.user }}">
                     <img class="preview" {% imagestore_alt image forloop.counter %} onerror=this.src="{% static 'icons/imgnotfound120.png' %}" src="{{ im.url }}">
                 </a>
                 <a href="{% include "imagestore/image-href.html" %}">

@@ -178,7 +178,6 @@
             $('#accordion').on('show.bs.collapse', function (e) {
               // alert('Event fired on album ' + e.target.id);
               var parent_album_id = e.target.id;
-              // $('#').html("Hello World");
               console.log("parent album id is: " + parent_album_id);
               $.get('/gallery/sidebarsubalbums/', {get_parent_album: parent_album_id}, function(data){
                    $('#'+parent_album_id).html(data);
@@ -214,22 +213,43 @@
 
       <script>
       $(document).ready(function() {
+        var imageId = 0;
         $('.thumb').magnificPopup({
           type:'image',
+          callbacks: {
+            markupParse: function(template, values, item) {
+              // Triggers each time when content of popup changes
+              // console.log('Parsing:', template, values, item);
+              imageId = item.el.attr('id');
+            },
+          },
           gallery: {
             enabled: true
           },
-          // image: {
-          //   // options for image content type
-          //   titleSrc: 'title',
-          //   title2: 'title',
-          // }
           image: {
             // tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
             titleSrc: function(item) {
               return item.el.attr('title') + '<small>' + 'Uploaded by: ' + item.el.attr('user') + '</small>' + '<small>' + item.el.attr('summary') + '</small>';
-            }
+            },
+            markup: '<div class="mfp-figure">'+
+            '<button title="options" type="button" id="openImageOptions" class="options"><i class="fas fa-ellipsis-h"></i></button>'+
+            '<div class="mfp-close"></div>'+
+            '<div class="mfp-img"></div>'+
+            '<div class="mfp-bottom-bar" style="text-align:center;">'+
+            '<div class="mfp-title"></div>'+
+            '<div class="mfp-counter"></div>'+
+            '</div>'+
+            '</div>',
           }
+        });
+        var magnificPopup = $.magnificPopup.instance;
+        //
+        $(document).on('click', '#openImageOptions', function () {
+          $('#originalLink').attr("href", "{% url 'imagestore:image' 1234 %}".replace(/1234/, imageId.toString()));
+          $('#editLink').attr("href", "{% url 'imagestore:update-image' 1234 %}".replace(/1234/, imageId.toString()));
+          $('#deleteLink').attr("href", "{% url 'imagestore:delete-image' 1234 %}".replace(/1234/, imageId.toString()));
+          $('#imageOptions').modal('toggle');
+          // console.log("opening"+imageId);
         });
       });
       </script>

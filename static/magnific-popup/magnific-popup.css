@@ -70,6 +70,7 @@
   cursor: auto; }
 
 .mfp-close,
+.options,
 .mfp-arrow,
 .mfp-preloader,
 .mfp-counter {
@@ -104,7 +105,33 @@
 .mfp-s-error .mfp-content {
   display: none; }
 
-button.mfp-close,
+button.mfp-close {
+  overflow: visible;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  display: inline-block;
+  outline: none;
+  padding: 0;
+  z-index: 1046;
+  box-shadow: none;
+  touch-action: manipulation; }
+
+button.options {
+  overflow: visible;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  display: inline-block;
+  outline: none;
+  padding: 0;
+  z-index: 1046;
+  box-shadow: none;
+  touch-action: manipulation; }
+
+
 button.mfp-arrow {
   overflow: visible;
   cursor: pointer;
@@ -143,6 +170,27 @@ button::-moz-focus-inner {
   .mfp-close:active {
     top: 1px; }
 
+.options {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-decoration: none;
+  text-align: center;
+  opacity: 0.65;
+  padding: 0 0 18px 10px;
+  color: #FFF;
+  font-style: normal;
+  font-size: 28px;
+  font-family: Arial, Baskerville, monospace; }
+  .options:hover,
+  .options:focus {
+    opacity: 1; }
+  .options:active {
+    top: 1px; }
+
 .mfp-close-btn-in .mfp-close {
   color: #333; }
 
@@ -152,7 +200,8 @@ button::-moz-focus-inner {
   right: -6px;
   text-align: right;
   padding-right: 6px;
-  width: 100%; }
+  width: 20%;
+}
 
 .mfp-counter {
   position: absolute;
@@ -326,6 +375,16 @@ img.mfp-img {
     right: 5px;
     top: 3px; }
   .mfp-img-mobile .mfp-close {
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    text-align: center;
+    padding: 0; } }
+  .mfp-img-mobile .options {
     top: 0;
     right: 0;
     width: 35px;

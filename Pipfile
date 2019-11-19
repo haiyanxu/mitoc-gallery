@@ -31,7 +31,7 @@ swapper = "==1.1.0"
 urllib3 = "==1.25.3"
 Django = "~=2.2.7"
 pillow = "*"
-imagestore-mitoc = {git = "https://github.com/haiyanxu/imagestore-mitoc.git",ref = "master"}
+imagestore-mitoc = {editable = true,git = "https://github.com/haiyanxu/imagestore-mitoc.git",ref = "master"}
 
 [requires]
 python_version = "3.8"

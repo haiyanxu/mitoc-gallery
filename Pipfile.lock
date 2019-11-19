@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "eeb80b783baf38b0e23defa55a3f706e51de2cb31eefcf772b6e2871e6554595"
+            "sha256": "9f8a802ff3b784da67ca76960c07d96f760a4f2d64d6b53788dabbdf74107859"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -124,6 +124,10 @@
             ],
             "index": "pypi",
             "version": "==2.8"
+        },
+        "imagestore-mitoc": {
+            "git": "https://github.com/haiyanxu/imagestore-mitoc.git",
+            "ref": "dc6560518a4fb0134a50b381f3edf75f4b58f241"
         },
         "markdown2": {
             "hashes": [

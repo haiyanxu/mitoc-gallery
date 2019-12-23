@@ -49,8 +49,6 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_markdown2',
     'django_cleanup.apps.CleanupConfig',
-    'pages',
-    # 'users',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

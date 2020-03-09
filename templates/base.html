@@ -5,213 +5,211 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
     {% load i18n %}
     {% load static %}
     {% load imagestore_tags %}
     {% load mptt_tags %}
 
-    <!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <!-- Magnific Popup core CSS file -->
-    <link rel="stylesheet" type="text/css" href="{%  static  'magnific-popup/magnific-popup.css' %}">
-
-
-
-    <!-- Magnific Popup core JS file -->
-    <script type="text/javascript" src="{% static 'magnific-popup/jquery.magnific-popup.js' %}"></script>
-
     <title>{% block title %}MITOC Photo Gallery{% endblock title %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
     {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
+      <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="{%  static  'css/bootstrap-4.4.1.min.css' %}">
+      <!-- Font Awesome CSS -->
+        <link rel="stylesheet" type="text/css" href="{%  static  'css/all-5.12.0.min.css' %}">
+      <!-- Imagestore CSS -->
+        <link rel="stylesheet" type="text/css" href="{%  static  'css/imagestore.css' %}">
+      <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="{%  static  'css/jquery.mCustomScrollbar-3.1.5.min.css' %}">
+      <!-- Magnific Popup core CSS file -->
+        <link rel="stylesheet" type="text/css" href="{%  static  'magnific-popup/magnific-popup.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    <!-- jQuery -->
+      <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- Bootstrap JS bundled with Popper JS -->
+      <script type="text/javascript" src="{% static 'js/bootstrap.bundle-4.4.1.min.js' %}"></script>
+    <!-- jQuery Custom Scroller -->
+      <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar-3.1.5.concat.min.js' %}"></script>
+    <!-- Magnific Popup core JS file -->
+      <script type="text/javascript" src="{% static 'magnific-popup/jquery.magnific-popup.js' %}"></script>
     {% endblock %}
 
   </head>
 
   <body>
+      <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'imagestore:index' %}">MITOC Photo Gallery</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ml-auto">
+                    {% if imagestore_perms.add_album or request.user.is_superuser %}
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
+                    </li> {% endif %}
+                    {% if user.is_authenticated %}
+                      <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Sign Out<span class="sr-only">(current)</span></a></li>
+                    {% else %}
+                      <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account_signup' %}">Sign Up<span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'account_login' %}">Sign In<span class="sr-only">(current)</span></a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </nav>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'home' %}">MITOC Photo Gallery</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'imagestore:index' %}">Gallery<span class="sr-only">(current)</span></a>
-              </li>
-              {% if imagestore_perms.add_album or request.user.is_superuser %}
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'imagestore:create-album' %}">New Album<span class="sr-only">(current)</span></a>
-              </li> {% endif %}
-              {% if imagestore_perms.add_image or request.user.is_superuser %}
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'imagestore:upload' %}">Upload Image<span class="sr-only">(current)</span></a>
-              </li> {% endif %}
-              {% if user.is_authenticated %}
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'account_logout' %}">Logout<span class="sr-only">(current)</span></a></li>
-              {% else %}
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'account_signup' %}">Signup<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'account_login' %}">Login<span class="sr-only">(current)</span></a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
+        <div class="container">
 
-    <div class="wrapper">
+            <!-- The sidebar -->
+                <nav id="sidebar">
+                    <div id="dismiss">
+                        <i class="fas fa-angle-double-left"></i>
+                    </div>
+                    <div class="sidebar-header">
+                        <h3>Albums</h3>
+                    </div>
 
-      <!-- The sidebar -->
-      <nav id="sidebar">
-          <div id="dismiss">
-              <i class="fas fa-angle-double-left"></i>
-          </div>
-          <div class="sidebar-header">
-              <h3>Albums</h3>
-          </div>
+                    <ul class="list-unstyled components" id="accordion">
+                        {% get_root_albums as albumroot %}
+                        {% for album in albumroot %}
+                        <li>
+                            <a href="{{ album.get_absolute_url }}">{{ album.name }}</a>
+                            {% if not album.is_leaf_node %}
+                                <a href="#a{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-angle-down"></i></a>
+                                <ul class="collapse list-unstyled" id="a{{ album.pk }}">
+                                </ul>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
 
-          <ul class="list-unstyled components" id="accordion">
-              {% get_root_albums as albumroot %}
-              <!-- <p>Dummy Heading</p> -->
-              {% for album in albumroot %}
-              <li>
-                  <a href="{{ album.get_absolute_url }}">{{ album.name }}</a>
-                  {% if not album.is_leaf_node %}
-                      <a href="#{{ album.pk }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-angle-down"></i></a>
-                      <ul class="collapse list-unstyled" id="{{ album.pk }}">
-                      </ul>
-                  {% endif %}
-              </li>
-              {% endfor %}
-          </ul>
-      </nav>
-
-        <!-- Open Sidebar Button -->
-        <button type="button" id="open-sidebar" class="btn btn-primary btn-sm">
-          <i class="fas fa-angle-double-right"></i>
-        </button>
+            <!-- Open Sidebar Button -->
+                <button type="button" id="open-sidebar" class="btn btn-primary btn-sm">
+                  <i class="fas fa-angle-double-right"></i>
+                </button>
 
         <div id="content" class="content">
 
-            {% block breadcrumb %}
-                <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <!-- {% if request.path != '/' %}
-                        <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                    {% endif %}
-                    {% if request.path == '/' %}
-                        <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                    {% endif %} -->
-                    <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
-                    {% if request.path != imagestore_index_url %}
-                        <li class="breadcrumb-item"><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a></li>
-                    {% endif %}
-                    {% block imagestore-breadcrumb %}
-                    {% endblock %}
-                </ol>
-              </nav>
-            {% endblock %}
+                {% block breadcrumb %}
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="/">{% trans "Home" %}</a></li>
+                          {% if request.path != imagestore_index_url %}
+                              <li class="breadcrumb-item"><a href="{{ imagestore_index_url }}">{% trans "Gallery" %}</a></li>
+                          {% endif %}
+                          {% block imagestore-breadcrumb %}
+                          {% endblock %}
+                        </ol>
+                    </nav>
+                {% endblock %}
 
-            {% if messages %}
-            <div>
-              <strong>Messages:</strong>
-              <ul>
-                {% for message in messages %}
-                <li>{{message}}</li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
+                {% if messages %}
+                    <div>
+                      <strong>Messages:</strong>
+                      <ul>
+                        {% for message in messages %}
+                        <li>{{message}}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                {% endif %}
 
             {% block content %}
-            <!-- <h1>Example project</h1> -->
             {% endblock %}
 
             {% block content-related %}
-                    {% block imagestore-info %}
-                    {% endblock %}
-                    <div id="controls">
-                        <ul>
-                            <!-- {% if imagestore_perms.add_image or request.user.is_superuser %}
-                                <li><a href={% url 'imagestore:upload' %}>{% trans "Upload image" %}</a></li>
-                            {% endif %}
-                            {% if imagestore_perms.add_album or request.user.is_superuser %}
-                                <li><a href={% url 'imagestore:create-album' %}>{% trans "Create new album" %}</a></li>
-                            {% endif %} -->
-                            {% block controls %}
-                            {% endblock controls %}
-                        </ul>
-                    </div>
-                    {% block imagestore-related %}
-                    {% endblock %}
+                {% block imagestore-info %}
+                {% endblock %}
+                <div id="controls">
+                    <ul>
+                        {% block controls %}
+                        {% endblock controls %}
+                    </ul>
+                </div>
+                {% block imagestore-related %}
+                {% endblock %}
             {% endblock %}
 
           </div>
+
           <!-- Dark Overlay element -->
-          <div class="overlay"></div>
-      </div>
+              <div class="overlay"></div>
+
+        </div>
+
+        <div class="footer">
+          <div class="container">
+              <a class="text-muted" href="https://mitoc.mit.edu/">2020 MITOC</a>
+              <ul>
+                <li>
+                  <a class="text-muted" href="{% url 'icon-page' %}">Icons</a>
+                </li>
+              </ul>
+          </div>
+        </div>
+
+
+      {% if form %}<body onbeforeunload="return confirmLeavePage()">{% endif %}
 
       <script>
+          function confirmLeavePage() {
+            return "This page is asking you to confirm that you want to leave - data you have entered may not be saved.";
+          }
+      </script>
+
+      <script>
+
+      $('form').submit(function () {
+        window.onbeforeunload = null;
+      });
+
       $(document).ready(function(){
             $('#accordion').on('show.bs.collapse', function (e) {
-              // alert('Event fired on album ' + e.target.id);
-              var parent_album_id = e.target.id;
+              console.log('Event fired on album ' + e.target.id);
+              var id = e.target.id;
+              var parent_album_id = id.substring(1, id.length);
               console.log("parent album id is: " + parent_album_id);
-              $.get('/gallery/sidebarsubalbums/', {get_parent_album: parent_album_id}, function(data){
-                   $('#'+parent_album_id).html(data);
-                   // console.log("finished getting html:" + data);
+              $.get('/sidebarsubalbums/', {get_parent_album: parent_album_id}, function(data){
+                   $('#a'+parent_album_id).html(data);
+                   console.log("finished getting html:" + data);
               });
           });
       });
-      </script>
 
-      <script>
-          $(document).ready(function () {
-              $("#sidebar").mCustomScrollbar({
-                  theme: "minimal-dark"
-              });
-
-              $('#dismiss, .overlay').on('click', function () {
-                  // hide sidebar
-                  $('#sidebar').removeClass('active');
-                  // hide overlay
-                  $('.overlay').removeClass('active');
-              });
-
-              $('#open-sidebar').on('click', function () {
-                  // open sidebar
-                  $('#sidebar').addClass('active');
-                  // fade in the overlay
-                  $('.overlay').addClass('active');
-                  $('.collapse.in').toggleClass('in');
-                  $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-              });
+      $(document).ready(function () {
+          $("#sidebar").mCustomScrollbar({
+              theme: "minimal-dark"
           });
-      </script>
 
-      <script>
+          $('#dismiss, .overlay').on('click', function () {
+              // hide sidebar
+              $('#sidebar').removeClass('active');
+              // hide overlay
+              $('.overlay').removeClass('active');
+          });
+
+          $('#open-sidebar').on('click', function () {
+              // open sidebar
+              $('#sidebar').addClass('active');
+              // fade in the overlay
+              $('.overlay').addClass('active');
+              $('.collapse.in').toggleClass('in');
+              $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+          });
+      });
+
       $(document).ready(function() {
         var imageId = 0;
         $('.thumb').magnificPopup({

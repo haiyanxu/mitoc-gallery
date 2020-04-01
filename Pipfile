@@ -22,6 +22,7 @@ django-cleanup = "*"
 django = "<=2.2.8"
 django-recaptcha = "*"
 imagestore-mitoc = {editable = true,path = "C:/Users/haiya/Projects/imagestore-mitoc"}
+psycopg2 = "*"
 
 [requires]
 python_version = "3.8"

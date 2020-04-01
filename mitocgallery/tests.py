@@ -154,14 +154,6 @@ class PageTests(TestCase):
         self.assertEqual(new_number_of_albums, number_of_albums+1)
 
     def test_album(self):
-        #test base URL
-        response = self.client.get('/album/1/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageListView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/image_list.html')
-        self.assertContains(response, 'testuser1Album1')
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:album', kwargs={'album_id': self.album_id}))
         self.assertEqual(response.status_code, 200)
@@ -187,11 +179,6 @@ class PageTests(TestCase):
         self.assertContains(response, 'Delete Album')
 
     def test_update_album(self):
-        #test base URL
-        response = self.client.get('/album/1/edit/', follow = True)
-        self.assertEqual(response.status_code, 200)
-        self._guest_login_required(response)
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:update-album', kwargs={'pk': self.album_id}), follow = True)
         self.assertEqual(response.status_code, 200)
@@ -207,15 +194,10 @@ class PageTests(TestCase):
         self.assertTemplateUsed(response, 'imagestore/forms/album_form.html')
         initial_name = response.context['form'].initial['name']
         response = self.client.post(reverse('imagestore:update-album', kwargs={'pk': self.album_id}), {'name': initial_name, 'tripreport':'updated trip report'}, follow=True)
-        self.assertEqual(Album.objects.get(id=1).tripreport, 'updated trip report')
+        self.assertEqual(Album.objects.get(id=self.album_id).tripreport, 'updated trip report')
         self._navbar_options_user(response)
 
     def test_delete_album(self):
-        #test base URL
-        response = self.client.get('/album/1/delete/', follow = True)
-        self.assertEqual(response.status_code, 200)
-        self._guest_login_required(response)
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:delete-album', kwargs={'pk': self.album_id}), follow = True)
         self.assertEqual(response.status_code, 200)
@@ -236,14 +218,6 @@ class PageTests(TestCase):
         img = Image.objects.get(user__username='testuser1')
         self.assertIsNotNone(img.title)
         self.client.logout()
-        #test base URL
-        response = self.client.get('/tag/dogs/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageListView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/image_list.html')
-        self.assertContains(response, 'dogs')
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:tag', kwargs={'tag': "dogs"}))
         self.assertEqual(response.status_code, 200)
@@ -263,15 +237,6 @@ class PageTests(TestCase):
         self._navbar_options_user(response)
 
     def test_user(self):
-        #test base URL
-        response = self.client.get('/user/testuser1/albums/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.AlbumListView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/album_list.html')
-        self.assertContains(response, 'Albums for user testuser1')
-        self.assertContains(response, 'testuser1Album1')
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:user', kwargs={'username': self.user.username}))
         self.assertEqual(response.status_code, 200)
@@ -279,6 +244,7 @@ class PageTests(TestCase):
         self.assertTemplateUsed(response, 'base.html')
         self.assertTemplateUsed(response, 'imagestore/album_list.html')
         self.assertContains(response, 'Albums for user testuser1')
+        self.assertContains(response, 'testuser1Album1')
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
@@ -293,15 +259,6 @@ class PageTests(TestCase):
         img = Image.objects.get(user__username='testuser1')
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
-        #test base URL
-        response = self.client.get('/user/testuser1/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageListView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/image_list.html')
-        self.assertContains(response, 'User: testuser1')
-        self.assertContains(response, 'testuser1image1')
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:user-images', kwargs={'username': self.user.username}))
         self.assertEqual(response.status_code, 200)
@@ -320,11 +277,6 @@ class PageTests(TestCase):
         self._navbar_options_user(response)
 
     def test_upload_image_to_album(self):
-        #test base URL
-        response = self.client.get('/upload/album/1/', follow = True)
-        self.assertEqual(response.status_code, 200)
-        self._guest_login_required(response)
-        self._navbar_options_guest(response)
         #test reverse URL
         response = self.client.get(reverse('imagestore:upload-image-to-album', kwargs={'album_id': self.album_id}), follow = True)
         self.assertEqual(response.status_code, 200)
@@ -349,16 +301,8 @@ class PageTests(TestCase):
         img = Image.objects.get(user__username='testuser1')
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
-        #test base URL
-        response = self.client.get('/image/1/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/image.html')
-        self.assertContains(response, 'testuser1image1')
-        self._navbar_options_guest(response)
         #test reverse URL
-        response = self.client.get(reverse('imagestore:image', kwargs={'pk': 1}))
+        response = self.client.get(reverse('imagestore:image', kwargs={'pk': img.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageView.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')
@@ -367,7 +311,7 @@ class PageTests(TestCase):
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:image', kwargs={'pk': 1}))
+        response = self.client.get(reverse('imagestore:image', kwargs={'pk': img.id}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'testuser1image1')
         self._navbar_options_user(response)
@@ -378,16 +322,8 @@ class PageTests(TestCase):
         img = Image.objects.get(user__username='testuser1')
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
-        #test base URL
-        response = self.client.get('/album/1/image/1/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageView.as_view().__name__)
-        self.assertTemplateUsed(response, 'base.html')
-        self.assertTemplateUsed(response, 'imagestore/image.html')
-        self.assertContains(response, 'testuser1image1')
-        self._navbar_options_guest(response)
         #test reverse URL
-        response = self.client.get(reverse('imagestore:image-album', kwargs={'pk': 1, 'album_id':self.album_id}))
+        response = self.client.get(reverse('imagestore:image-album', kwargs={'pk': img.id, 'album_id':self.album_id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageView.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')
@@ -396,31 +332,25 @@ class PageTests(TestCase):
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:image-album', kwargs={'pk': 1, 'album_id':self.album_id}))
+        response = self.client.get(reverse('imagestore:image-album', kwargs={'pk': img.id, 'album_id':self.album_id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageView.as_view().__name__)
         self._navbar_options_user(response)
 
-    # redirect to login page when guest tries to delete an image
     def test_delete_image(self):
         response = self.client.login(username='testuser1', password='MitocGallery')
         response = self._upload_test_image()
         img = Image.objects.get(user__username='testuser1')
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
-        #test base URL
-        response = self.client.get('/image/1/delete/', follow = True)
-        self.assertEqual(response.status_code, 200)
-        self._guest_login_required(response)
-        self._navbar_options_guest(response)
         #test reverse URL
-        response = self.client.get(reverse('imagestore:delete-image', kwargs={'pk': 1}), follow = True)
+        response = self.client.get(reverse('imagestore:delete-image', kwargs={'pk': img.id}), follow = True)
         self.assertEqual(response.status_code, 200)
         self._guest_login_required(response)
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:delete-image', kwargs={'pk': 1}), follow = True)
+        response = self.client.get(reverse('imagestore:delete-image', kwargs={'pk': img.id}), follow = True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.DeleteImage.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')
@@ -434,19 +364,14 @@ class PageTests(TestCase):
         img = Image.objects.get(user__username='testuser1')
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
-        #test base URL
-        response = self.client.get('/image/1/update/', follow = True)
-        self.assertEqual(response.status_code, 200)
-        self._guest_login_required(response)
-        self._navbar_options_guest(response)
         #test reverse URL
-        response = self.client.get(reverse('imagestore:update-image', kwargs={'pk': 1}), follow = True)
+        response = self.client.get(reverse('imagestore:update-image', kwargs={'pk': img.id}), follow = True)
         self.assertEqual(response.status_code, 200)
         self._guest_login_required(response)
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:update-image', kwargs={'pk': 1}), follow = True)
+        response = self.client.get(reverse('imagestore:update-image', kwargs={'pk': img.id}), follow = True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.UpdateImage.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')

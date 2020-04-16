@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'imagestore',
     'sorl.thumbnail',
     'tagging',
-    'debug_toolbar',
     'django_markdown2',
     'django_cleanup.apps.CleanupConfig',
     'captcha',
@@ -81,7 +80,6 @@ ACCOUNT_SIGNUP_FORM_CLASS = 'mitocgallery.forms.AllauthSignupForm'
 ACCOUNT_USERNAME_REQUIRED = False
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -171,7 +169,7 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'

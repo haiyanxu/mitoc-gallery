@@ -29,12 +29,15 @@ urlpatterns = [
     # url(r'^', include(('imagestore.urls', 'imagestore'), namespace='imagestore')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
+try:
     import debug_toolbar
+except ImportError:
+    pass
+else:
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
 
-        # For django versions before 2.0:
-        # url(r'^__debug__/', include(debug_toolbar.urls)),
+                # For django versions before 2.0:
+                # url(r'^__debug__/', include(debug_toolbar.urls)),
 
-    ] + urlpatterns
+            ] + urlpatterns

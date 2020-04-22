@@ -2,7 +2,7 @@
 
 .container {
     display: flex;
-    width: 100%;
+    width: 90%;
     /* align-items: stretch; */
     font-family: 'Oxygen', sans-serif;
 }

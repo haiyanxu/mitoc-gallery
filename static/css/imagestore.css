@@ -234,7 +234,9 @@ hr {
 }
 
 .image-summary {
-    padding: 5px;
+    padding: .5rem;
+    overflow-y: scroll;
+    max-height: 50vh;
 }
 
 .navigation {

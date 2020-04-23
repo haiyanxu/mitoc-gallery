@@ -190,6 +190,14 @@ a[data-toggle="collapse"] {
   margin-left: 25px;
 }
 
+.section-container {
+  position: relative;
+  margin: 1rem;
+  border: .2rem solid #c6c6c6;
+  padding: 1rem;
+  overflow: auto;
+}
+
 #content {
     width: 100%;
     /* padding: 40px; */
@@ -260,8 +268,8 @@ img.current {
 }
 
 .album-list .album {
-    width: 160px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     float: left;
     padding: 5px;
     margin: 10px;

@@ -31,11 +31,9 @@
     {% if not album_list and not image_list %}<img src="{% static 'icons/emptyalbum.png' %}"/><br> This album is empty{% endif %}
 
     {% if album_list %}
-    <hr>
     <h3>Sub-Albums</h3>
         <div class='album-list'>
             {% for album in album_list %}
-                {% if album.get_head  or album.user == request.user %}
                 <div class='album'>
                     <div class='album-head'>
                         <a href="{{ album.get_absolute_url }}">
@@ -47,7 +45,6 @@
                         {% else %}
                             <img src="{% static 'icons/emptyalbum.png' %}"/>
                             [{% trans "Empty album" %}]
-
                         {% endif %}
                         <br>
                         <span class="album-name" title="{{ album.name }}">{{ album.name|truncatechars:30 }}</span>
@@ -60,7 +57,6 @@
                         </a>
                     </div>
                 </div>
-                {% endif %}
             {% endfor %}
         </div>
     {% endif %}
@@ -90,7 +86,6 @@
             </div>
 
         <div id ="image-thumbnails">
-          <hr>
           <h3>Images</h3>
             {% for image in image_list %}
                 <div class='image-preview'>

@@ -31,33 +31,34 @@
     {% if not album_list and not image_list %}<img src="{% static 'icons/emptyalbum.png' %}"/><br> This album is empty{% endif %}
 
     {% if album_list %}
-    <h3>Sub-Albums</h3>
-        <div class='album-list'>
-            {% for album in album_list %}
-                <div class='album'>
-                    <div class='album-head'>
-                        <a href="{{ album.get_absolute_url }}">
-                        {% if album.get_head %}
-                            {% thumbnail album.get_head.image "128x128" crop='center' as album_head %}
-                                <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ album_head.url }}">
-                                {% empty %}
-                            {% endthumbnail %}
-                        {% else %}
-                            <img src="{% static 'icons/emptyalbum.png' %}"/>
-                            [{% trans "Empty album" %}]
-                        {% endif %}
-                        <br>
-                        <span class="album-name" title="{{ album.name }}">{{ album.name|truncatechars:30 }}</span>
-                        {% if not view_user and IMAGESTORE_SHOW_USER %}
+        <div class="section-container">
+            <div class='album-list'>
+                {% for album in album_list %}
+                    <div class='album'>
+                        <div class='album-head'>
+                            <a href="{{ album.get_absolute_url }}">
+                            {% if album.get_head %}
+                                {% thumbnail album.get_head.image "128x128" crop='center' as album_head %}
+                                    <img class="preview" {% if album.name %} alt="{{ album.name }}" {% endif %} onerror=this.src="{% static 'icons/imgnotfound.png' %}" src="{{ album_head.url }}">
+                                    {% empty %}
+                                {% endthumbnail %}
+                            {% else %}
+                                <img src="{% static 'icons/emptyalbum.png' %}"/>
+                                [{% trans "Empty album" %}]
+                            {% endif %}
                             <br>
-                            <span class="album-user">
-                                {% trans "user" %}: {{ album.user }}
-                            </span>
-                        {% endif %}
-                        </a>
+                            <span class="album-name" title="{{ album.name }}">{{ album.name|truncatechars:30 }}</span>
+                            {% if not view_user and IMAGESTORE_SHOW_USER %}
+                                <br>
+                                <span class="album-user">
+                                    {% trans "user" %}: {{ album.user }}
+                                </span>
+                            {% endif %}
+                            </a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
 

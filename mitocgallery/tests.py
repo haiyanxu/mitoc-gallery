@@ -238,7 +238,7 @@ class PageTests(TestCase):
 
     def test_user(self):
         #test reverse URL
-        response = self.client.get(reverse('imagestore:user', kwargs={'username': self.user.username}))
+        response = self.client.get(reverse('imagestore:user', kwargs={'user_id': self.user.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.AlbumListView.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')
@@ -248,7 +248,7 @@ class PageTests(TestCase):
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:user', kwargs={'username': self.user.username}))
+        response = self.client.get(reverse('imagestore:user', kwargs={'user_id': self.user.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.AlbumListView.as_view().__name__)
         self._navbar_options_user(response)
@@ -260,7 +260,7 @@ class PageTests(TestCase):
         self.assertTrue(img.title == 'testuser1image1')
         self.client.logout()
         #test reverse URL
-        response = self.client.get(reverse('imagestore:user-images', kwargs={'username': self.user.username}))
+        response = self.client.get(reverse('imagestore:user-images', kwargs={'user_id': self.user.id}))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageListView.as_view().__name__)
         self.assertTemplateUsed(response, 'base.html')
@@ -270,7 +270,7 @@ class PageTests(TestCase):
         self._navbar_options_guest(response)
         #test user logged in
         self.client.login(username='testuser1', password='MitocGallery')
-        response = self.client.get(reverse('imagestore:user-images', kwargs={'username': self.user.username}))
+        response = self.client.get(reverse('imagestore:user-images', kwargs={'user_id': self.user.id}))
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(img.title)
         self.assertEqual(response.resolver_match.func.__name__, imagestore.views.ImageListView.as_view().__name__)

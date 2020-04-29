@@ -196,6 +196,7 @@ a[data-toggle="collapse"] {
   border: .2rem solid #c6c6c6;
   padding: 1rem;
   overflow: auto;
+  text-align: center;
 }
 
 #content {
@@ -272,11 +273,10 @@ img.current {
 .album-list .album {
     width: 200px;
     height: 200px;
-    float: left;
     padding: 5px;
     margin: 10px;
     overflow: hidden;
-    display: block;
+    display: inline-block;
 }
 
 .album-name {
@@ -294,11 +294,9 @@ img.current {
 .album-head {
     height: 150px;
     width: 150px;
-    display: table-cell;
+    display: inline-block;
     vertical-align: middle;
     text-align: center;
-    /* background-image:url('imgnotfound.png');
-    width:400px; */
 }
 
 .album-head a {
@@ -313,15 +311,13 @@ img.current {
 #image-thumbnails {
   width: 100%;
   clear: both;
+  display: inline-block;
 }
 
 .image-preview {
-    float: left;
+    display: inline-block;
     width: 150px;
-    /* padding: 5px; */
-    padding-left: 15px;
     height: 150px;
-    /* display: table-cell; */
     overflow: hidden;
 }
 

@@ -16,13 +16,13 @@ Pillow = ">=5.4.1"
 chardet = "*"
 django-mptt = "*"
 django-crispy-forms = ">=1.7.2"
-django-markdown2 = "*"
 django-allauth = "*"
 django-cleanup = "*"
 django = "<=2.2.10"
 django-recaptcha = "*"
 imagestore-mitoc = {editable = true,path = "C:/Users/haiya/Projects/imagestore-mitoc"}
 psycopg2 = "*"
+django-markdown2 = "*"
 
 [requires]
 python_version = "3.8"

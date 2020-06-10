@@ -18,7 +18,7 @@ django-mptt = "*"
 django-crispy-forms = ">=1.7.2"
 django-allauth = "*"
 django-cleanup = "*"
-django = "<=2.2.10"
+django = "~=2.2"
 django-recaptcha = "*"
 imagestore-mitoc = {editable = true,path = "C:/Users/haiya/Projects/imagestore-mitoc"}
 psycopg2 = "*"

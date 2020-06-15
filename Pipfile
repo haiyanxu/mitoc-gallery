@@ -21,7 +21,7 @@ django-cleanup = "*"
 django = "~=2.2"
 django-recaptcha = "*"
 imagestore-mitoc = {editable = true,path = "C:/Users/haiya/Projects/imagestore-mitoc"}
-psycopg2 = "*"
+psycopg2-binary = "*"
 django-markdown2 = "*"
 
 [requires]

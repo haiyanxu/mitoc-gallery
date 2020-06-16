@@ -56,7 +56,6 @@
                         {% endthumbnail %}
                     {% else %}
                         <img src="{% static 'icons/emptyalbum150.png' %}"/>
-                        [{% trans "Empty album" %}]
                     {% endif %}
                     <br>
                     <span class="album-name" title="{{ album.name }}">{{ album.name|truncatechars:30 }}</span>

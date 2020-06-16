@@ -271,7 +271,16 @@ img.current {
 }
 
 .album-list .album {
-    width: 200px;
+    width: 160px;
+    height: 240px;
+    padding: 5px;
+    margin: 10px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.album-list .subalbum {
+    width: 160px;
     height: 200px;
     padding: 5px;
     margin: 10px;
@@ -280,7 +289,8 @@ img.current {
 }
 
 .album-name {
-    width: 100%;
+    width: 95%;
+    display: inline-block;
     text-align: center;
 }
 

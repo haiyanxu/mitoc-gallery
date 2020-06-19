@@ -67,4 +67,4 @@ target/
 
 media/
 
-staticfiles/
+static/

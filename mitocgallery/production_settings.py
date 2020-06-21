@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['localhost', '54.92.146.207']
 
 INTERNAL_IPS = ['127.0.0.1']
 
-# CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SETTING', True)
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 

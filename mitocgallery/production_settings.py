@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['localhost', '54.92.146.207']
 INTERNAL_IPS = ['127.0.0.1']
 
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 

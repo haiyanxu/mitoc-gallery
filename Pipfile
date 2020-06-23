@@ -20,7 +20,7 @@ django-allauth = "*"
 django-cleanup = "*"
 django = "~=2.2"
 django-recaptcha = "*"
-imagestore-mitoc = {editable = true,path = "C:/Users/haiya/Projects/imagestore-mitoc"}
+imagestore-mitoc = "4.1.0"
 psycopg2-binary = "*"
 django-markdown2 = "*"
 
